@@ -38,7 +38,6 @@ import libcore.io.IoBridge;
 import libcore.io.Libcore;
 import libcore.io.Memory;
 import static android.system.OsConstants.*;
-
 /**
  * An Internet Protocol (IP) address. This can be either an IPv4 address or an IPv6 address, and
  * in practice you'll have an instance of either {@code Inet4Address} or {@code Inet6Address} (this
@@ -247,8 +246,9 @@ public class InetAddress implements Serializable {
                 throw new UnknownHostException("Deprecated IPv4 address format: " + host);
             }
             return new InetAddress[] { result };
+        } else if (host.substring(host.length()-1).equals(".")) {
+            throw new UnknownHostException("Deprecated IPv4 address format: " + host);
         }
-
         return lookupHostByName(host, netId).clone();
     }
 
